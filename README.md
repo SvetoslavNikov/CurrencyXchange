@@ -11,8 +11,6 @@ This project consists of four microservices:
 3. **Naming Server**: Eureka service registry for service discovery
 4. **API Gateway**: Routes requests to appropriate microservices
 
-![Architecture Diagram](https://i.imgur.com/placeholder.png)
-
 ## Technologies Used
 
 - **Spring Boot**: Framework for creating microservices
