@@ -1,0 +1,62 @@
+#version: '3.8'
+#
+#services:
+#  naming-server:
+#    build:
+#      context: ./naming-server
+#    ports:
+#      - "8761:8761"
+#    networks:
+#      - currency-network
+#
+#  currency-exchange:
+#    build:
+#      context: ./currency-exchange-service
+#    ports:
+#      - "8000:8000"
+#    networks:
+#      - currency-network
+#    environment:
+#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://naming-server:8761/eureka
+#    depends_on:
+#      - naming-server
+#
+#  currency-conversion:
+#    build:
+#      context: ./currency-conversion-service
+#    ports:
+#      - "8100:8100"
+#    networks:
+#      - currency-network
+#    environment:
+#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://naming-server:8761/eureka
+#    depends_on:
+#      - naming-server
+#      - currency-exchange
+#
+#  api-gateway:
+#    build:
+#      context: ./api-gateway
+#    ports:
+#      - "8765:8765"
+#    networks:
+#      - currency-network
+#    environment:
+#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://naming-server:8761/eureka
+#    depends_on:
+#      - naming-server
+#
+##  frontend:
+##    image: nginx:alpine
+##    ports:
+##      - "80:80"
+##    volumes:
+##      - ./frontend:/usr/share/nginx/html
+##    networks:
+##      - currency-network
+##    depends_on:
+##      - api-gateway
+#
+#networks:
+#  currency-network:
+#    driver: bridge
