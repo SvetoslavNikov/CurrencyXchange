@@ -8,6 +8,6 @@ RUN mvn -f /app/pom.xml clean package
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
-EXPOSE 8765
+EXPOSE 8000
 COPY --from=build /app/target/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app/app.jar"]
