@@ -1,14 +1,13 @@
-# Build stage
-FROM maven:3.9.6-eclipse-temurin-21 AS build
-WORKDIR /home/app
-
-COPY . /home/app
-RUN mvn clean package -DskipTests
-
-# Runtime stage
-FROM eclipse-temurin:21-jdk
+FROM maven:3.9.9-eclipse-temurin-21 AS build
 WORKDIR /app
-EXPOSE 5000
+COPY ./pom.xml /app/pom.xml
+RUN mvn -f /app/pom.xml dependency:go-offline -B
 
-COPY --from=build /home/app/target/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+COPY . /app
+RUN mvn -f /app/pom.xml clean package
+
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+EXPOSE 8765
+COPY --from=build /app/target/*.jar app.jar
+ENTRYPOINT ["java","-jar","/app/app.jar"]

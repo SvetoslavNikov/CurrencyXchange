@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,7 +56,7 @@ public class CurrencyExchangeControllerTest {
         assertNotNull(result);
         assertEquals(from, result.getFrom());
         assertEquals(to, result.getTo());
-        assertEquals(new BigDecimal("0.85"), result.getConversionMultiple());
+        assertEquals(new BigDecimal(0.85).setScale(6, RoundingMode.HALF_UP), result.getConversionMultiple());
     }
 
     @Test
@@ -81,7 +82,7 @@ public class CurrencyExchangeControllerTest {
         String url = "https://open.er-api.com/v6/latest/" + from;
 
         when(restTemplate.getForObject(eq(url), eq(ExchangeRatesApiResponse.class)))
-                .thenReturn(null); // Simulate API failure
+                .thenReturn(null);
 
         Exception exception = assertThrows(RuntimeException.class, () -> {
             currencyExchangeController.getExchangeRate(from, to);

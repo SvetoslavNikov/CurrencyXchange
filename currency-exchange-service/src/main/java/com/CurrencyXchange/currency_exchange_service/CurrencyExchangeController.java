@@ -36,6 +36,7 @@ public class CurrencyExchangeController {
 
 
 		try {
+			//this may throw RestClientException. Its handled in GlobalExceptionHandler
 			ExchangeRatesApiResponse response = restTemplate.getForObject(url, ExchangeRatesApiResponse.class);
 
 			if (response == null) {
