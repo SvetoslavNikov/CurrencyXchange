@@ -46,17 +46,6 @@ services:
     depends_on:
       - naming-server
 
-#  frontend:
-#    image: nginx:alpine
-#    ports:
-#      - "80:80"
-#    volumes:
-#      - ./frontend:/usr/share/nginx/html
-#    networks:
-#      - currency-network
-#    depends_on:
-#      - api-gateway
-
 networks:
   currency-network:
     driver: bridge
